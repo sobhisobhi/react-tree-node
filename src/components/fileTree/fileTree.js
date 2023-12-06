@@ -8,17 +8,21 @@ const FileTree = ({ root }) => {
     };
   return (
     <ul>
-      <li data-testid="node">
-      {root.type === 'dir' && (
-        <div data-testid="dir-expand" onClick={handleToggle}>
-          {isExpanded ? '[-]' : '[+]'}
-        </div>
-      )}
-      {root.name}
+      <li data-testid={`node ${root.name}`}>
+        {root.type === 'dir' && (
+          <div data-testid="dir-expand" onClick={handleToggle}>
+              {isExpanded ? '▼' : '►'}
+              <span className="dir-icon">{root.name}</span> 
+          </div>
+        )}
+        {root.type === 'file' && (
+          <span className="file-icon">{root.name}</span> // File icon
+        )}
+      
       {isExpanded && root.type === 'dir' && (
         <ul>
           {root.children.map((childNode, index) => (
-            <FileTree key ={index} root={childNode} />
+            <FileTree root={childNode} key={index} />
           ))}
         </ul>
       )}
